@@ -1,5 +1,9 @@
 README.md
+pyproject.toml
 setup.py
+mvp/__init__.py
+mvp/mvp_pipeline.py
+mvp/mvp_summarizer.py
 src/__init__.py
 src/models/__init__.py
 src/pipelines_project/__init__.py
