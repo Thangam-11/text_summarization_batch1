@@ -1,0 +1,7 @@
+transformers
+torch
+nltk
+networkx
+pyyaml
+streamlit
+python-dotenv
