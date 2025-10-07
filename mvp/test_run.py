@@ -1,9 +1,34 @@
-from mvp.nlp_models import SummarizerAPI, ParaphraserAPI
+import os
+import sys
+from dotenv import load_dotenv
 
-summarizer = SummarizerAPI()
-paraphraser = ParaphraserAPI()
+# ✅ Add parent folder (Text_summarization) to Python path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
-text = "Artificial Intelligence is transforming industries by enabling automation and decision-making."
+# ✅ Import directly from mvp_pipeline
+from mvp.mvp_pipeline import SummarizationPipeline
 
-print("Summary:", summarizer.summarize(text))
-print("Paraphrase:", paraphraser.paraphrase(text))
+# Load environment variables
+load_dotenv()
+
+api_key = os.getenv("HF_API_KEY")
+
+if not api_key:
+    print("⚠️ Please set your HF_API_KEY in .env file")
+else:
+    summarizer = SummarizationPipeline(api_key)
+
+    text = """Machine learning is a subset of artificial intelligence that enables systems 
+    to learn and improve from experience without being explicitly programmed."""
+
+    print("=== Abstractive Summary ===")
+    print(summarizer.summarize(text, method='abstractive', length='short'))
+
+    print("\n=== Extractive Summary ===")
+    print(summarizer.summarize(text, method='extractive', length='short'))
+
+    print("\n=== Paraphrase ===")
+    print(summarizer.paraphrase(text))
